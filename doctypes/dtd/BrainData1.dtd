@@ -1,0 +1,106 @@
+<!-- Root Element -->
+<!ELEMENT BrainData (Source, Attributes?, Thoughts?, Links?, AttributeDatas?, Entries?, Attachments?)>
+
+<!-- Source of this data -->
+<!ELEMENT Source (guid?,name?,personalBrainVersion?,telepathyVersion?,fileRoot?,generatedDateTime?,homeThoughtGuid?,brainXmlSettings?,modificationDateTime?)>
+
+<!-- Attributes -->
+<!ELEMENT Attributes (Attribute*)>
+<!ELEMENT Attribute (guid, name, creationDateTime, modificationDateTime, deletedDateTime, isDisplayed, isEditable, orderRank, dataType)>
+
+<!-- Thoughts and their properties -->
+<!ELEMENT Thoughts (Thought+)>
+<!ELEMENT Thought (guid,name,label?,creationDateTime?,realModificationDateTime?,displayModificationDateTime?,forgottenDateTime?,deletedDateTime?,activationDateTime?,linksModificationDateTime?,isType?,color?,accessControlType?)>
+
+
+<!-- Links and their properties -->
+<!ELEMENT Links (Link*)>
+<!ELEMENT Link (guid,idA?,idB?,dir,isBackward?,name?,labelForward?,labelBackward?,creationDateTime?,modificationDateTime?,deletedDateTime?,followDateTime?,isType?,color?,thickness?,strength?,meaning?,linkTypeID?)>
+
+<!-- AttributeData and their properties -->
+<!ELEMENT AttributeDatas (AttributeData*)>
+<!ELEMENT AttributeData (guid, thoughtGuid, attributeGuid, data, creationDateTime?, modificationDateTime?, deletedDateTime?)>
+
+<!-- Entries (notes) -->
+<!ELEMENT Entries (Entry*)>
+<!ELEMENT Entry (guid,EntryObjects?,body?,format?,creationDateTime?,modificationDateTime?,deletedDateTime?)>
+
+<!-- Associations between Entries and Thoughts - will also be used for Links in the future -->
+<!ELEMENT EntryObjects (EntryObject+)>
+<!ELEMENT EntryObject (objectType,objectID)>
+
+<!-- Attachments - external files and URLs will be referenced using the given location, internal attachments will be copied into the destination and are normally located in the fileRoot under the id folder -->
+<!ELEMENT Attachments (Attachment*)>
+<!ELEMENT Attachment (guid,AttachmentEntries?,objectID,name,attachmentType,location,dataLength?,format?,creationDateTime?,modificationDateTime?,deletedDateTime?)>
+
+<!-- Associations between attachments and entries -->
+<!ELEMENT AttachmentEntries (attachmentEntryID+)>
+
+<!--
+
+data formats:
+
+- times and dates are specified in the format yyyy-MM-dd HH:mm:ss.SSS @Z where HH is 0-23, SSS is 0-999, and Z is the 4 digit time zone information (eg PST = -0800)
+- boolean values are represented by true or false
+- colors are represented by a hex number in the format of AARRGGBB where AA is the alpha channel
+
+-->
+
+
+<!-- guid is used to reference elements internally - if the guid starts with the character !, it is considered temporary and will be turned into a guid when inserted into a brain -->
+<!-- use of a non-temporary, true guid is recommended as it allows for future updates to the data if it is inserted again at a later date -->
+<!ELEMENT guid (#PCDATA)>
+
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT personalBrainVersion (#PCDATA)>  <!-- if missing, the default value is assumed to be 0. version information must be 5519 or higher to be accepted for pasting into PB 5.5. -->
+<!ELEMENT telepathyVersion (#PCDATA)>      <!-- if missing, the default value is assumed to be 10. values other than 10 will not be accepeted for pasting into PB 5.5. -->
+<!ELEMENT fileRoot (#PCDATA)>              <!-- the complete path to the location of folders containing any internal attachments -->
+<!ELEMENT generatedDateTime (#PCDATA)>
+<!ELEMENT homeThoughtGuid (#PCDATA)>
+<!ELEMENT brainXmlSettings (#PCDATA)>      <!-- the XML containing colors, wallpaper, pins, and other various info -->
+
+<!ELEMENT label (#PCDATA)>
+<!ELEMENT keywords (#PCDATA)>
+<!ELEMENT creationDateTime (#PCDATA)>
+<!ELEMENT realModificationDateTime (#PCDATA)>
+<!ELEMENT displayModificationDateTime (#PCDATA)>
+<!ELEMENT forgottenDateTime (#PCDATA)>
+<!ELEMENT deletedDateTime (#PCDATA)>
+<!ELEMENT activationDateTime (#PCDATA)>
+<!ELEMENT linksModificationDateTime (#PCDATA)>
+<!ELEMENT isType (#PCDATA)>  <!-- this is not a boolean and values indicate: 0 - normal thought, 1 - thought type, 2 - event, 3 - tag, 4+ - future stuff -->
+<!ELEMENT color (#PCDATA)>
+<!ELEMENT accessControlType (#PCDATA)>
+
+<!ELEMENT idA (#PCDATA)>
+<!ELEMENT idB (#PCDATA)>
+<!ELEMENT dir (#PCDATA)>
+<!ELEMENT labelForward (#PCDATA)>
+<!ELEMENT labelBackward (#PCDATA)>
+<!ELEMENT modificationDateTime (#PCDATA)>
+<!ELEMENT followDateTime (#PCDATA)>
+<!ELEMENT thickness (#PCDATA)>
+<!ELEMENT strength (#PCDATA)>
+<!ELEMENT isBackward (#PCDATA)>
+<!ELEMENT meaning (#PCDATA)>
+<!ELEMENT linkTypeID (#PCDATA)>
+
+<!ELEMENT objectType (#PCDATA)>
+<!ELEMENT objectID (#PCDATA)>
+<!ELEMENT body (#PCDATA)>
+
+<!ELEMENT attachmentType (#PCDATA)>
+<!ELEMENT location (#PCDATA)>
+<!ELEMENT dataLength (#PCDATA)>
+<!ELEMENT format (#PCDATA)>
+<!ELEMENT attachmentEntryID (#PCDATA)>
+
+<!ELEMENT thoughtGuid (#PCDATA)>
+<!ELEMENT attributeGuid (#PCDATA)>
+<!ELEMENT data (#PCDATA)>
+
+<!ELEMENT isDisplayed (#PCDATA)>
+<!ELEMENT isEditable (#PCDATA)>
+<!ELEMENT orderRank (#PCDATA)>
+<!ELEMENT dataType (#PCDATA)>
+
